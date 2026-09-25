@@ -42,8 +42,16 @@ def run_evaluation(host="localhost", port=8080):
     print("  EARLY HTTP/1.1 CALCULATOR EVALUATION SUITE")
     print("=" * 60)
     
-    s = socket.create_connection((host, port))
-    s.settimeout(2.0)
+    try:
+        s = socket.create_connection((host, port))
+        s.settimeout(2.0)
+    except (ConnectionRefusedError, OSError):
+        print(f"\n❌ Connection Refused: Could not connect to {host}:{port}")
+        print("💡 The server must be running at the same time!")
+        print("   • Terminal 1: Keep 'python3 server.py 8080' running")
+        print("   • Terminal 2: Run 'python3 client.py localhost 8080'")
+        print("   (Or run 'python3 test_server.py' to run server + client in 1 command!)\n")
+        return False
     
     test_cases = [
         ("GET /add?a=2&b=3 HTTP/1.1\r\nHost: localhost:8080\r\n\r\n", 200, "5"),

@@ -13,7 +13,7 @@ import threading
 import time
 from datetime import datetime, timezone
 
-HOST = "127.0.0.1"
+HOST = "0.0.0.0"
 DEFAULT_PORT = 8080
 IDLE_TIMEOUT = 10.0  # seconds before closing idle socket
 
