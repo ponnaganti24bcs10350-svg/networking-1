@@ -187,7 +187,7 @@ def handle_client(client_socket, client_address):
             if not keep_alive:
                 break
                 
-    except Exception as e:
+    except Exception:
         pass
     finally:
         try:

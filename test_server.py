@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 """
-Unit and Integration tests for HTTP/1.1 Calculator Server
+Unit and Integration tests for HTTP/1.1 Persistent Calculator Server
 """
 
 import unittest
-import threading
 import socket
 import time
-from http11_calculator.server import CalculatorServer
-from http11_calculator.client_evaluator import run_evaluation, parse_http_response
+from server import CalculatorServer
+from client import run_evaluation, parse_http_response
 
 
 class TestHTTP11Calculator(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.port = 8081
+        cls.port = 8085
         cls.server = CalculatorServer(port=cls.port)
         cls.server.start(background=True)
         time.sleep(0.2)

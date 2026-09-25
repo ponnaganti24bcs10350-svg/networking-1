@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Professor's Evaluation Script for HTTP/1.1 Calculator
+HTTP/1.1 Calculator Evaluation Client
 Connects once via raw TCP socket and sends all test requests over the SAME socket,
 verifying that the socket stays open and all responses match expected status and body.
 """
@@ -10,7 +10,7 @@ import sys
 import time
 
 def parse_http_response(raw_bytes):
-    """Parses raw HTTP response bytes into (status_code, headers_dict, body_str)"""
+    """Parses raw HTTP response bytes into (status_code, headers_dict, body_str, remaining_bytes)"""
     header_end = raw_bytes.find(b"\r\n\r\n")
     if header_end == -1:
         return None, {}, "", raw_bytes
