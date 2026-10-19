@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-"""
-HTTP/1.1 Calculator Evaluation Client
-Connects once via raw TCP socket and sends all test requests over the SAME socket,
-verifying that the socket stays open and all responses match expected status and body.
-"""
+
 
 import socket
 import sys
@@ -71,14 +66,13 @@ def run_evaluation(host="localhost", port=8080):
     for idx, (req_str, expected_status, expected_body) in enumerate(test_cases, 1):
         s.sendall(req_str.encode("utf-8"))
         
-        # Read until full response headers + body
         while True:
             parsed_status, headers, body, leftover = parse_http_response(buffer)
             if parsed_status is not None:
                 content_len = int(headers.get("content-length", 0))
                 header_len = buffer.find(b"\r\n\r\n") + 4
                 if len(buffer) >= header_len + content_len:
-                    # Full response is in buffer
+                   
                     break
             
             chunk = s.recv(4096)
@@ -103,10 +97,8 @@ def run_evaluation(host="localhost", port=8080):
         summary_req = req_str.split('\r\n')[0]
         print(f"[{idx}/9] {summary_req:<42} -> {status_code} '{body.strip()}' {mark}")
     
-    # Verify socket is STILL alive and open!
-    socket_still_open = False
+=    socket_still_open = False
     try:
-        # Send a final ping request
         s.sendall(b"GET /add?a=1&b=1 HTTP/1.1\r\nHost: localhost:8080\r\n\r\n")
         reply = s.recv(1024)
         if reply:
